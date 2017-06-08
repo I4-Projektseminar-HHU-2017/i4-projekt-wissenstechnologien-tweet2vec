@@ -4,7 +4,7 @@ import my_config # local file in repo root
 import tweepy # http://docs.tweepy.org/en/v3.5.0/getting_started.html
 import sys # cheap arg parse
 import emoji # pip3  install --user emoji  //  https://github.com/carpedm20/emoji/
-
+from collections import Counter # https://docs.python.org/3/library/collections.html#collections.Counter
 
 
 
@@ -49,36 +49,39 @@ class Tweet:
 	def message(self):
 		return self.text
 
-API = tweepy_getAPI()
 
-ARGS = sys.argv
+if __name__ == "__main__":
 
-if (len(ARGS) > 1): # first arg is always script name
-	ACC = ARGS[1] # the account we want to get tweets from
-	print(ACC)
-else:
-	print("WARNING: No arguments passed.")
-	print("Need Twitter Account name.")
-	exit()
+	API = tweepy_getAPI()
+	ARGS = sys.argv
 
+	if (len(ARGS) > 1): # first arg is always script name
+		ACC = ARGS[1] # the account we want to get tweets from
+		print(ACC)
+	else:
+		print("WARNING: No arguments passed.")
+		exit(1)
 
-# @TODO: check that the passed arg is a valid twitter account name!
-# @TODO: check if we need to catch exception thrown if (number of tweets to retrieve) > (number of tweets by user)
+	try: 
+		# docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
+		user_id = API.get_user(ACC).screen_name
 
-# docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
-user_id = API.get_user(ACC).screen_name
+		last_tweets = API.user_timeline(user_id, count = 5) # count is the number of tweets to retrieve
+	except tweepy.error.TweepError as e:
+		# tweepy.error.TweepError: [{'message': 'User not found.', 'code': 50}]
+		# can we handles this more gracefully?s
+		print("Need valid twitter user name.")
+		exit(1)
 
-last_tweets = API.user_timeline(user_id, count = 5) # count is the number of tweets to retrieve
+	for i in last_tweets:
+		t = Tweet(i) # this creates our own custom wrapper object
+		print("Tweet:")
+		print(t.message())
+		print(t.emojis())
+		print(t.hashtags())
+		print(t.mentions())
 
-for i in last_tweets:
-	t = Tweet(i) # this creates our own custom wrapper object
-	print("Tweet:")
-	print(t.message())
-	print(t.emojis())
-	print(t.hashtags())
-	print(t.mentions())
+		print("")
 
-	print("")
-
-	print("\n\n\n")
+		print("\n\n\n")
 
