@@ -17,6 +17,7 @@ The file my_config.py must be located in the repo root.
 
 
 Python modules:
-
+````
 tweepy  http://docs.tweepy.org/en/v3.5.0/getting_started.html
 emoji   https://github.com/carpedm20/emoji/
+````
