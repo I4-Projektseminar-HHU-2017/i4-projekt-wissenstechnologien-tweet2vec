@@ -1,5 +1,8 @@
 # i4-projekt-wissenstechnologien-tweet2vec
 
+Requirements:
+
+
 The script will need a twitter access token.
 https://dev.twitter.com/oauth/overview/application-owner-access-tokens
 The file ````my_config.py```` must look as follows:
@@ -11,3 +14,8 @@ access_token_secret = "xxxxxxxxxxxxxxxxx"
 ````
 
 The file my_config.py must be located in the repo root.
+
+
+Python modules:
+
+tweepy
