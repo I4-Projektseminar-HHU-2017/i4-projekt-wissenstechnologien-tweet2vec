@@ -1,0 +1,4 @@
+#python bins
+*.pyc
+# config file for auth credentials 
+/my_config.py
