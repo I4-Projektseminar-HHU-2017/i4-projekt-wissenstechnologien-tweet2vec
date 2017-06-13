@@ -100,10 +100,12 @@ if __name__ == "__main__":
 
 	print(list_of_tweets)
 
+	# generate rough list of emojis contained in tweets
 	bad_list_of_emojis =[]
 	for t in list_of_tweets:
 		bad_list_of_emojis.append(t.emojis())
 
+	# feed emoji sublists into one unified list
 	print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
 	list_of_emojis = []
 	for sublist in bad_list_of_emojis:
@@ -111,15 +113,18 @@ if __name__ == "__main__":
 #		print(x)
 			list_of_emojis.append(emoji)
 
+	# make set
 	list_of_emojis = set(list_of_emojis)
 	print(list_of_emojis)
 
+
+	# build matrix of emojis and tweets containing them
 	print("===========")
 	glob=[]
 	for emoji in list_of_emojis: #iterate over emoji
 		line = []
 		line.append(emoji)
-		for tweet in list_of_tweets:
+		for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
 			if emoji in tweet.text:
 				line.append(1)
 			else:
