@@ -71,7 +71,7 @@ if __name__ == "__main__":
 
 	if (len(ARGS) > 1): # first arg is always script name
 		ACC = ARGS[1] # the account we want to get tweets from
-		print(ACC)
+		NUM_TWEETS = 10  if (len(ARGS) == 2) else ARGS[2] # default to retrieving 20 tweets if no number passed as 2nd param
 	else:
 		print("WARNING: No arguments passed.")
 		exit(1)
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 		# docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
 		user_id = API.get_user(ACC).screen_name
 
-		last_tweets = API.user_timeline(user_id, count = 5) # count is the number of tweets to retrieve
+		last_tweets = API.user_timeline(user_id, count = NUM_TWEETS) # count is the number of tweets to retrieve
 	except tweepy.error.TweepError as e:
 		# tweepy.error.TweepError: [{'message': 'User not found.', 'code': 50}]
 		# can we handles this more gracefully?s
