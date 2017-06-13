@@ -38,7 +38,7 @@ class Tweet:
 			if (char in emoji.UNICODE_EMOJI):  # char is recognized as emoji
 				emojis.append(char)
 		self.cached_emojis = emojis # cache
-		return set(emojis) # return list of emojis
+		return emojis # return list of emojis
 
 	def hashtags(self): # return list of hashtags
 		if (self.cached_hashtags):
@@ -48,7 +48,7 @@ class Tweet:
 			if (word[0] == "#") and (len(word) > 1):  # word starts with hashtag and is longer then one char
 				hashtags.append(word)
 		self.cached_hashtags = hashtags
-		return set(hashtags)
+		return hashtags
 
 	def mentions(self): # return list of mentions
 		if (self.cached_mentions):
@@ -58,7 +58,7 @@ class Tweet:
 			if (word[0] == "@") and (len(word) > 1):  # word starts with mention and is longer then one char
 				mentions.append(word)
 		self.cached_mentions = mentions
-		return set(mentions)
+		return mentions
 
 	def message(self):
 		return self.text
@@ -80,22 +80,51 @@ if __name__ == "__main__":
 		# docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
 		user_id = API.get_user(ACC).screen_name
 
-		last_tweets = API.user_timeline(user_id, count = 20) # count is the number of tweets to retrieve
+		last_tweets = API.user_timeline(user_id, count = 5) # count is the number of tweets to retrieve
 	except tweepy.error.TweepError as e:
 		# tweepy.error.TweepError: [{'message': 'User not found.', 'code': 50}]
 		# can we handles this more gracefully?s
 		print("Need valid twitter user name.")
 		exit(1)
 
+	list_of_tweets=[]
+
 	for i in last_tweets:
 		t = Tweet(i) # this creates our own custom wrapper object
-		print("Tweet:")
-		print(t.message())
-		print(t.emojis())
-		print(t.hashtags())
-		print(t.mentions())
+#		print("Tweet:")
+#		print(t.message())
+#		print(t.emojis())
+#		print(t.hashtags())
+#		print(t.mentions())
+		list_of_tweets.append(t) # tweet obj
 
-		print("")
+	print(list_of_tweets)
 
-		print("\n\n\n")
+	bad_list_of_emojis =[]
+	for t in list_of_tweets:
+		bad_list_of_emojis.append(t.emojis())
 
+	print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
+	list_of_emojis = []
+	for sublist in bad_list_of_emojis:
+		for emoji in sublist:
+#		print(x)
+			list_of_emojis.append(emoji)
+
+	list_of_emojis = set(list_of_emojis)
+	print(list_of_emojis)
+
+	print("===========")
+	glob=[]
+	for emoji in list_of_emojis: #iterate over emoji
+		line = []
+		line.append(emoji)
+		for tweet in list_of_tweets:
+			if emoji in tweet.text:
+				line.append(1)
+			else:
+				line.append(0)
+		glob.append(line)
+
+	for x in glob:
+		print(x)
