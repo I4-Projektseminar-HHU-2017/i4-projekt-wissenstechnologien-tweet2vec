@@ -23,13 +23,18 @@ class Tweet:
 	def __init__(self,tweepyRef): # reference to tweet obj by tweepy
 		self.ref = tweepyRef
 		self.text = tweepyRef.text
+		self.cached_emojis = [] # cache
 
 	def emojis(self): # return list of emojis
+		# if we already have the cached results, return these
+		if (self.EMOJIS):
+			return self.EMOJIS
 		emojis=[]
 		# emoji.UNICODE_EMOJI taken from https://stackoverflow.com/questions/43146528/how-to-extract-all-the-emojis-from-text
 		for char in self.text: # walk text char by char
 			if (char in emoji.UNICODE_EMOJI):  # char is recognized as emoji
 				emojis.append(char)
+		self.EMOJIS = emojis # cache
 		return emojis # return list of emojis
 
 	def hashtags(self): # return list of hashtags
