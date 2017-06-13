@@ -38,7 +38,7 @@ class Tweet:
 			if (char in emoji.UNICODE_EMOJI):  # char is recognized as emoji
 				emojis.append(char)
 		self.cached_emojis = emojis # cache
-		return emojis # return list of emojis
+		return set(emojis) # return list of emojis
 
 	def hashtags(self): # return list of hashtags
 		if (self.cached_hashtags):
@@ -48,7 +48,7 @@ class Tweet:
 			if (word[0] == "#") and (len(word) > 1):  # word starts with hashtag and is longer then one char
 				hashtags.append(word)
 		self.cached_hashtags = hashtags
-		return hashtags
+		return set(hashtags)
 
 	def mentions(self): # return list of mentions
 		if (self.cached_mentions):
@@ -58,7 +58,7 @@ class Tweet:
 			if (word[0] == "@") and (len(word) > 1):  # word starts with mention and is longer then one char
 				mentions.append(word)
 		self.cached_mentions = mentions
-		return mentions
+		return set(mentions)
 
 	def message(self):
 		return self.text
@@ -80,7 +80,7 @@ if __name__ == "__main__":
 		# docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
 		user_id = API.get_user(ACC).screen_name
 
-		last_tweets = API.user_timeline(user_id, count = 5) # count is the number of tweets to retrieve
+		last_tweets = API.user_timeline(user_id, count = 20) # count is the number of tweets to retrieve
 	except tweepy.error.TweepError as e:
 		# tweepy.error.TweepError: [{'message': 'User not found.', 'code': 50}]
 		# can we handles this more gracefully?s
