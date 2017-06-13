@@ -23,32 +23,41 @@ class Tweet:
 	def __init__(self,tweepyRef): # reference to tweet obj by tweepy
 		self.ref = tweepyRef
 		self.text = tweepyRef.text
-		self.cached_emojis = [] # cache
+		# caches, avoid recomputation
+		self.cached_emojis = []
+		self.cached_hashtags = []
+		self.cached_mentions = []
 
 	def emojis(self): # return list of emojis
 		# if we already have the cached results, return these
-		if (self.EMOJIS):
-			return self.EMOJIS
+		if (self.cached_emojis):
+			return self.cached_emojis
 		emojis=[]
 		# emoji.UNICODE_EMOJI taken from https://stackoverflow.com/questions/43146528/how-to-extract-all-the-emojis-from-text
 		for char in self.text: # walk text char by char
 			if (char in emoji.UNICODE_EMOJI):  # char is recognized as emoji
 				emojis.append(char)
-		self.EMOJIS = emojis # cache
+		self.cached_emojis = emojis # cache
 		return emojis # return list of emojis
 
 	def hashtags(self): # return list of hashtags
+		if (self.cached_hashtags):
+			return self.cached_hashtags
 		hashtags=[]
 		for word in self.text.split(): # split line into words
 			if (word[0] == "#") and (len(word) > 1):  # word starts with hashtag and is longer then one char
 				hashtags.append(word)
+		self.cached_hashtags = hashtags
 		return hashtags
 
-	def mentions(self): # return list of hashtags
+	def mentions(self): # return list of mentions
+		if (self.cached_mentions):
+			return self.cached_mentions
 		mentions=[]
 		for word in self.text.split(): # split line into words
 			if (word[0] == "@") and (len(word) > 1):  # word starts with mention and is longer then one char
 				mentions.append(word)
+		self.cached_mentions = mentions
 		return mentions
 
 	def message(self):
