@@ -21,3 +21,8 @@ Python modules:
 tweepy  http://docs.tweepy.org/en/v3.5.0/getting_started.html
 emoji   https://github.com/carpedm20/emoji/
 ````
+
+Usage:
+````
+./main.py HHU_de 15
+````
