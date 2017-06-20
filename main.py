@@ -98,7 +98,7 @@ if __name__ == "__main__":
 #		print(t.mentions())
 		list_of_tweets.append(t) # tweet obj
 
-	print(list_of_tweets)
+#	print(list_of_tweets)
 
 	# generate rough list of emojis contained in tweets
 	bad_list_of_emojis =[]
@@ -106,7 +106,7 @@ if __name__ == "__main__":
 		bad_list_of_emojis.append(t.emojis())
 
 	# feed emoji sublists into one unified list
-	print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
+#	print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
 	list_of_emojis = []
 	for sublist in bad_list_of_emojis:
 		for emoji in sublist:
