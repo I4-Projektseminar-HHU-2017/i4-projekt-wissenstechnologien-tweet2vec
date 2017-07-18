@@ -137,16 +137,16 @@ if __name__ == "__main__":
 
     print("emojis per tweet")
 
-    print("               ", end="") # align properly
+    print("   ", end="") # align properly
     for tweet in list_of_tweets:
-        print(tweet.ref.id_str + " ", end="")
+        print(tweet.ref.id_str[0:3] + " ", end="")
 
 # len(tweet.ref.id_str) == 19
 
     print("")
     for sublist in glob:
         for data in sublist:
-            print(str(data) + "                   ", end="")
+            print(str(data) + "   ", end="")
         print("") # \n
 
 
