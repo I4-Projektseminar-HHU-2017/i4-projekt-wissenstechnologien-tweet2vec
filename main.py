@@ -115,8 +115,8 @@ if __name__ == "__main__":
 
     # make set
     list_of_emojis = set(list_of_emojis)
+    print("Found emojis:")
     print(list_of_emojis)
-
 
     # build matrix of emojis and tweets containing them
     print("===========")
@@ -131,5 +131,19 @@ if __name__ == "__main__":
                 line.append(0)
         glob.append(line)
 
-    for x in glob:
-        print(x)
+
+    print("emojis per tweet")
+
+    print("               ", end="") # align properly
+    for tweet in list_of_tweets:
+        print(tweet.ref.id_str + " ", end="")
+
+# len(tweet.ref.id_str) == 19
+
+    print("")
+    for sublist in glob:
+        for data in sublist:
+            print(str(data) + "                   ", end="")
+        print("") # \n
+
+
