@@ -115,9 +115,12 @@ if __name__ == "__main__":
 
     # make set
     list_of_emojis = set(list_of_emojis)
-    print("Found emojis:")
-    print(list_of_emojis)
-
+    if len(list_of_emojis):
+        print("Found emojis:")
+        print(list_of_emojis)
+    else:
+        print("No emojis found :(")
+        exit(3)
     # build matrix of emojis and tweets containing them
     print("===========")
     glob=[]
