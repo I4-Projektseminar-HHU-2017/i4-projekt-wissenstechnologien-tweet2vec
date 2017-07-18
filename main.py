@@ -25,8 +25,8 @@ class Tweet:
         self.text = tweepyRef.text
         # caches, avoid recomputation
         self.cached_emojis = []
-        self.cached_hashtags = []
         self.cached_mentions = []
+        self.cached_hashtags = []
 
     def emojis(self): # return list of emojis
         # if we already have the cached results, return these
@@ -76,7 +76,7 @@ if __name__ == "__main__":
         print("WARNING: No arguments passed.")
         exit(1)
 
-    try: 
+    try:
         # docs of user_timeline() http://tweepy.readthedocs.io/en/v3.5.0/api.html#API.user_timeline
         user_id = API.get_user(ACC).screen_name
 
@@ -96,31 +96,70 @@ if __name__ == "__main__":
 #       print(t.emojis())
 #       print(t.hashtags())
 #       print(t.mentions())
-        list_of_tweets.append(t) # tweet obj
+        list_of_tweets.append(t) # fill list with wrapper objs
 
-#   print(list_of_tweets)
+        #   print(list_of_tweets)
 
     # generate rough list of emojis contained in tweets
-    bad_list_of_emojis =[]
+    nested_list_of_emojis = []
+    nested_list_of_hashtags = []
+    nested_list_of_mentions = []
     for t in list_of_tweets:
-        bad_list_of_emojis.append(t.emojis())
+        nested_list_of_emojis.append(t.emojis()) # this is a nested list of list of all emojis in one tweet
+        nested_list_of_hashtags.append(t.hashtags())
+        nested_list_of_mentions.append(t.mentions())
+
 
     # feed emoji sublists into one unified list
 #   print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
     list_of_emojis = []
-    for sublist in bad_list_of_emojis:
+    list_of_hashtags = []
+    list_of_mentions = []
+
+    # flatten nested lists
+    for sublist in nested_list_of_emojis:
         for emoji in sublist:
-#       print(x)
             list_of_emojis.append(emoji)
+
+    for sublist in nested_list_of_hashtags:
+        for hashtag in sublist:
+            list_of_hashtags.append(hashtag)
+
+    for sublist in nested_list_of_mentions:
+        for mention in sublist:
+            list_of_mentions.append(mention)
+
+
+#    print(list_of_emojis)
+#    print(list_of_hashtags)
+#    print(list_of_mentions)
 
     # make set
     list_of_emojis = set(list_of_emojis)
+    list_of_hashtags = set(list_of_hashtags)
+    list_of_mentions = set(list_of_mentions)
+
     if len(list_of_emojis):
         print("Found emojis:")
         print(list_of_emojis)
     else:
         print("No emojis found :(")
-        exit(3)
+
+    if len(list_of_hashtags):
+        print("Hashtags found:")
+        print(list_of_hashtags)
+    else:
+        print("no #hashtags found.")
+
+    if len(list_of_mentions):
+        print("Mentions found:")
+        print(list_of_mentions)
+    else:
+        print("No @mentions found.")
+
+
+
+
     # build matrix of emojis and tweets containing them
     print("===========")
     glob=[]
@@ -150,3 +189,64 @@ if __name__ == "__main__":
         print("") # \n
 
 
+
+    # same for hashtags
+
+    # build matrix of hashtag and tweets containing them
+    print("===========")
+    glob=[]
+    for hashtag in list_of_hashtags: #iterate over hashtags
+        line = []
+        line.append(hashtag)
+        for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
+            if hashtag in tweet.text:
+                line.append(1)
+            else:
+                line.append(0)
+        glob.append(line)
+
+
+    print("hashtags per tweet")
+
+    print("   ", end="") # align properly
+    for tweet in list_of_tweets:
+        print(tweet.ref.id_str[0:3] + " ", end="")
+
+# len(tweet.ref.id_str) == 19
+
+    print("")
+    for sublist in glob:
+        for data in sublist:
+            print(str(data) + "   ", end="")
+        print("") # \n
+
+
+    # same for mentions
+
+    # build matrix of mention and tweets containing them
+    print("===========")
+    glob=[]
+    for mention in list_of_mentions: #iterate over mentions
+        line = []
+        line.append(mention)
+        for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
+            if mention in tweet.text:
+                line.append(1)
+            else:
+                line.append(0)
+        glob.append(line)
+
+
+    print("mentions per tweet")
+
+    print("   ", end="") # align properly
+    for tweet in list_of_tweets:
+        print(tweet.ref.id_str[0:3] + " ", end="")
+
+# len(tweet.ref.id_str) == 19
+
+    print("")
+    for sublist in glob:
+        for data in sublist:
+            print(str(data) + "   ", end="")
+        print("") # \n
