@@ -250,3 +250,27 @@ if __name__ == "__main__":
         for data in sublist:
             print(str(data) + "   ", end="")
         print("") # \n
+
+
+
+
+# try to build a vector space
+
+
+# @TODO src?
+# previously we were comparing documents where the space dimensions
+# were words (weightened or unweightened) and the vector represent the document
+# by calculating the angle between different vectors representing documents,
+# we could calculate the similarity of the documents
+
+
+# now we want to compare similarity of emojis.
+# so our document becomes and emoji
+# an emoji might occur in different tweets. These tweets are our dimensions
+# in the end by calculating the angle of the emojis vectors in the tweet-dimensions
+# we can compare similarity of tweets
+
+# tl;dr: 
+# vector space:
+ # vector == emojis 
+ # dimension == tweet 
