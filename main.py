@@ -168,7 +168,10 @@ if __name__ == "__main__":
         line.append(emoji)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if emoji in tweet.text:
-                line.append(1)
+                # @TODO add switch for weighted or unweighted 
+                # line.append(1)
+                occurrences = (tweet.text).count(emoji)
+                line.append(occurrences)
             else:
                 line.append(0)
         glob.append(line)
@@ -200,7 +203,10 @@ if __name__ == "__main__":
         line.append(hashtag)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if hashtag in tweet.text:
-                line.append(1)
+                # @TODO add switch for weighted or unweighted 
+                # line.append(1)
+                occurrences = (tweet.text).count(hashtag)
+                line.append(occurrences)
             else:
                 line.append(0)
         glob.append(line)
@@ -231,7 +237,10 @@ if __name__ == "__main__":
         line.append(mention)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if mention in tweet.text:
-                line.append(1)
+                # @TODO add switch for weighted or unweighted 
+                # line.append(1)
+                occurrences = (tweet.text).count(mention)
+                line.append(occurrences)
             else:
                 line.append(0)
         glob.append(line)
