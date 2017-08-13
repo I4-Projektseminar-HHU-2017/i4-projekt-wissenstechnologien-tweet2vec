@@ -90,7 +90,10 @@ def cosine_similarity(vec1, vec2): #int
 
     #print("numerator: " + str(numerator))
     #print("denominator: " + str(denominator))
-
+    if (not denominator):
+        # this fires if our vectors do not contain common elements
+        #print("error: denominator == 0, could probably not find vectors with common symbols")
+        return 0
     result = numerator / denominator
     return result
 
@@ -232,9 +235,6 @@ if __name__ == "__main__":
                 line.append(0)
         emojilist.append(line)
 
-    get_similarities_from_list(list_of_emojis)
-
-
 
     print("emojis per tweet")
 
@@ -253,15 +253,11 @@ if __name__ == "__main__":
         print("") # \n
 
 
-    print_similarity(emojilist[1], emojilist[2])
-
-    #print(emojilist)
-
     # same for hashtags
 
     # build matrix of hashtag and tweets containing them
     print("===========")
-    glob=[]
+    hashtaglist=[]
     for hashtag in list_of_hashtags: #iterate over hashtags
         line = []
         line.append(hashtag)
@@ -273,7 +269,7 @@ if __name__ == "__main__":
                 line.append(occurrences)
             else:
                 line.append(0)
-        glob.append(line)
+        hashtaglist.append(line)
 
 
     print("hashtags per tweet")
@@ -285,7 +281,7 @@ if __name__ == "__main__":
 # len(tweet.ref.id_str) == 19
 
     print("")
-    for sublist in glob:
+    for sublist in hashtaglist:
         for data in sublist:
             print(str(data) + "   ", end="")
         print("") # \n
@@ -295,7 +291,7 @@ if __name__ == "__main__":
 
     # build matrix of mention and tweets containing them
     print("===========")
-    glob=[]
+    mentionlist=[]
     for mention in list_of_mentions: #iterate over mentions
         line = []
         line.append(mention)
@@ -307,7 +303,7 @@ if __name__ == "__main__":
                 line.append(occurrences)
             else:
                 line.append(0)
-        glob.append(line)
+        mentionlist.append(line)
 
 
     print("mentions per tweet")
@@ -319,33 +315,28 @@ if __name__ == "__main__":
 # len(tweet.ref.id_str) == 19
 
     print("")
-    for sublist in glob:
+    for sublist in mentionlist:
         for data in sublist:
             print(str(data) + "   ", end="")
         print("") # \n
 
 
 
-
-# try to build a vector space
-
-
-# @TODO src?
-# previously we were comparing documents where the space dimensions
-# were words (weightened or unweightened) and the vector represent the document
-# by calculating the angle between different vectors representing documents,
-# we could calculate the similarity of the documents
+if len(emojilist):
+    get_similarities_from_list(emojilist)
+else:
+    print("Bailing out: no emojis found")
 
 
-# now we want to compare similarity of emojis.
-# so our document becomes and emoji
-# an emoji might occur in different tweets. These tweets are our dimensions
-# in the end by calculating the angle of the emojis vectors in the tweet-dimensions
-# we can compare similarity of tweets
+if len(hashtaglist):
+    get_similarities_from_list(hashtaglist)
+else:
+    print("Bailing out: no hashtags found")
 
-# tl;dr: 
-# vector space:
- # vector == emojis 
- # dimension == tweet 
+
+if len(mentionlist):
+    get_similarities_from_list(mentionlist)
+else:
+    print("Bailing out: no mentions found")
 
  
