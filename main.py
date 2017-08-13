@@ -208,25 +208,25 @@ if __name__ == "__main__":
     list_of_hashtags = set(list_of_hashtags)
     list_of_mentions = set(list_of_mentions)
 
-"""
-    if len(list_of_emojis):
-        print("Found emojis:")
-        print(list_of_emojis)
-    else:
-        print("No emojis found :(")
+    """
+        if len(list_of_emojis):
+            print("Found emojis:")
+            print(list_of_emojis)
+        else:
+            print("No emojis found :(")
 
-    if len(list_of_hashtags):
-        print("Hashtags found:")
-        print(list_of_hashtags)
-    else:
-        print("no #hashtags found.")
+        if len(list_of_hashtags):
+            print("Hashtags found:")
+            print(list_of_hashtags)
+        else:
+            print("no #hashtags found.")
 
-    if len(list_of_mentions):
-        print("Mentions found:")
-        print(list_of_mentions)
-    else:
-        print("No @mentions found.")
-"""
+        if len(list_of_mentions):
+            print("Mentions found:")
+            print(list_of_mentions)
+        else:
+            print("No @mentions found.")
+    """
 
 
 
