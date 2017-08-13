@@ -310,8 +310,6 @@ if __name__ == "__main__":
     for tweet in list_of_tweets:
         print(tweet.ref.id_str[0:3] + " ", end="")
 
-# len(tweet.ref.id_str) == 19
-
     print("")
     for sublist in mentionlist:
         for data in sublist:
