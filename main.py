@@ -101,10 +101,15 @@ def print_similarity(vec1, vec2): #void
     similarity = cosine_similarity(vec1, vec2)
     print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:10])
 
+def print_similarity_from_list(similarity, symbol_1, symbol_2):
+    print("Similarity of '" + symbol_1 + "' and '" + symbol_2 + "' is: " + str(similarity)[0:10])
+
+
 def get_similarities_from_list(list_of_sybols, nested_list):
     # get combinations
     combinations = list(itertools.combinations(list_of_sybols, 2))
     #print(combinations)
+    unsorted_sims = []
     for tupel in combinations:
         symbol1 = tupel[0]
         symbol2 = tupel[1]
@@ -121,9 +126,14 @@ def get_similarities_from_list(list_of_sybols, nested_list):
                 break
         # once we have the vectors, calc similarity
         sim =  cosine_similarity(vec1, vec2)
-        # skip unrelated symbols
-        if sim > 0:
-            print_similarity(vec1, vec2)
+        unsorted_sims.append([sim, vec1[0], vec2[0]])
+    # sort by similarity
+    sorted_sims=sorted(unsorted_sims, reverse=True)
+
+    for i in sorted_sims:
+        if i[0] > 0: # skip unrelated symbols
+            print_similarity_from_list(i[0], i[1], i[2])
+
 
 if __name__ == "__main__":
 
@@ -340,4 +350,4 @@ if __name__ == "__main__":
     else:
         print("Bailing out: no mentions found")
 
- 
+
