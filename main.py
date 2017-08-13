@@ -5,7 +5,7 @@ import tweepy # http://docs.tweepy.org/en/v3.5.0/getting_started.html
 import sys # cheap arg parse
 import emoji # pip3  install --user emoji  //  https://github.com/carpedm20/emoji/
 from collections import Counter # https://docs.python.org/3/library/collections.html#collections.Counter
-
+import itertools # itertools.combinations
 
 
 def tweepy_getAPI(): # log in via auth token and return api
@@ -63,6 +63,40 @@ class Tweet:
     def message(self):
         return self.text
 
+
+
+def cosine_similarity(vec1, vec2): #int
+    # @TODO: formular source
+    # first item is symbol, prune
+    v1 = vec1[1:]
+    v2 = vec2[1:]
+    assert(len(vec1) == len(vec2) and "ERROR: vec1 and vec2 of different size!")
+
+    numerator = 0
+    for iv1, iv2 in zip(v1, v2):
+        numerator += (iv1*iv2)
+
+    v1_squared_summed = 0
+    for i in v1:
+        v1_squared_summed += i**2
+
+    v2_squared_summed = 0
+    for i in v2:
+        v2_squared_summed += i**2
+
+    prod_sums = v1_squared_summed * v2_squared_summed
+
+    denominator = prod_sums**0.500 # root()
+
+    #print("numerator: " + str(numerator))
+    #print("denominator: " + str(denominator))
+
+    result = numerator / denominator
+    return result
+
+def print_similarity(vec1, vec2): #void
+    similarity = cosine_similarity(vec1, vec2)
+    print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:4]) 
 
 if __name__ == "__main__":
 
@@ -176,12 +210,32 @@ if __name__ == "__main__":
                 line.append(0)
         emojilist.append(line)
 
+    # get combinations
+    combinations = list(itertools.combinations(list_of_emojis, 2))
+    #print(combinations)
+    for tupel in combinations:
+        symbol1 = tupel[0]
+        symbol2 = tupel[1]
+        vec1 = []
+        vec2 = []
+        # extract vectors of the two symbols from emojilist
+        for i in emojilist:
+            # first element of the vector is the symbol
+            if i[0] == symbol1:
+                vec1 = i
+            if i[0] == symbol2:
+                vec2 = i
+        # once we have the vectors, calc similarity
+        print_similarity(vec1, vec2)
+
 
     print("emojis per tweet")
 
     print("   ", end="") # align properly
     for tweet in list_of_tweets:
         print(tweet.ref.id_str[0:3] + " ", end="")
+
+
 
 # len(tweet.ref.id_str) == 19
 
@@ -192,7 +246,9 @@ if __name__ == "__main__":
         print("") # \n
 
 
+    print_similarity(emojilist[1], emojilist[2])
 
+    #print(emojilist)
 
     # same for hashtags
 
