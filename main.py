@@ -131,8 +131,12 @@ def get_similarities_from_list(list_of_sybols, nested_list):
     sorted_sims=sorted(unsorted_sims, reverse=True)
 
     for i in sorted_sims:
-        if i[0] > 0: # skip unrelated symbols
-            print_similarity_from_list(i[0], i[1], i[2])
+        similarity = i[0]
+        symbol_1 = i[1]
+        symbol_2 = i[2]
+
+        if similarity > 0: # skip unrelated symbols
+            print_similarity_from_list(similarity, symbol_1, symbol_2)
 
 
 if __name__ == "__main__":
