@@ -93,7 +93,7 @@ def cosine_similarity(vec1, vec2): #int
     if (not denominator):
         # this fires if our vectors do not contain common elements
         #print("error: denominator == 0, could probably not find vectors with common symbols")
-        return 0
+        return -1
     result = numerator / denominator
     return result
 
@@ -120,7 +120,7 @@ def get_similarities_from_list(list_):
         # once we have the vectors, calc similarity
         sim =  cosine_similarity(vec1, vec2)
         # skip unrelated symbols
-        if sim != 0:
+        if sim > 0:
             print_similarity(vec1, vec2)
 
 if __name__ == "__main__":
@@ -321,22 +321,21 @@ if __name__ == "__main__":
         print("") # \n
 
 
-
-if len(emojilist):
-    get_similarities_from_list(emojilist)
-else:
-    print("Bailing out: no emojis found")
-
-
-if len(hashtaglist):
-    get_similarities_from_list(hashtaglist)
-else:
-    print("Bailing out: no hashtags found")
+    if len(list_of_emojis):
+        get_similarities_from_list(list_of_emojis)
+    else:
+        print("Bailing out: no emojis found")
 
 
-if len(mentionlist):
-    get_similarities_from_list(mentionlist)
-else:
-    print("Bailing out: no mentions found")
+    if len(list_of_hashtags):
+        get_similarities_from_list(list_of_hashtags)
+    else:
+        print("Bailing out: no hashtags found")
+
+
+    if len(list_of_mentions):
+        get_similarities_from_list(list_of_mentions)
+    else:
+        print("Bailing out: no mentions found")
 
  
