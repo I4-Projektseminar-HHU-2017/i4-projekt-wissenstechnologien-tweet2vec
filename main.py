@@ -86,7 +86,7 @@ def cosine_similarity(vec1, vec2): #int
 
     prod_sums = v1_squared_summed * v2_squared_summed
 
-    denominator = prod_sums**0.500 # root()
+    denominator = prod_sums**0.5 # root()
 
     #print("numerator: " + str(numerator))
     #print("denominator: " + str(denominator))
@@ -96,7 +96,7 @@ def cosine_similarity(vec1, vec2): #int
 
 def print_similarity(vec1, vec2): #void
     similarity = cosine_similarity(vec1, vec2)
-    print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:4]) 
+    print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:10])
 
 if __name__ == "__main__":
 
