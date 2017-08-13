@@ -101,9 +101,9 @@ def print_similarity(vec1, vec2): #void
     similarity = cosine_similarity(vec1, vec2)
     print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:10])
 
-def get_similarities_from_list(list_):
+def get_similarities_from_list(list_of_sybols, nested_list):
     # get combinations
-    combinations = list(itertools.combinations(list_, 2))
+    combinations = list(itertools.combinations(list_of_sybols, 2))
     #print(combinations)
     for tupel in combinations:
         symbol1 = tupel[0]
@@ -111,7 +111,7 @@ def get_similarities_from_list(list_):
         vec1 = []
         vec2 = []
         # extract vectors of the two symbols from emojilist
-        for i in emojilist:
+        for i in nested_list:
             # first element of the vector is the symbol
             if i[0] == symbol1:
                 vec1 = i
@@ -322,19 +322,19 @@ if __name__ == "__main__":
 
 
     if len(list_of_emojis):
-        get_similarities_from_list(list_of_emojis)
+        get_similarities_from_list(list_of_emojis, emojilist)
     else:
         print("Bailing out: no emojis found")
 
 
     if len(list_of_hashtags):
-        get_similarities_from_list(list_of_hashtags)
+        get_similarities_from_list(list_of_hashtags, hashtaglist)
     else:
         print("Bailing out: no hashtags found")
 
 
     if len(list_of_mentions):
-        get_similarities_from_list(list_of_mentions)
+        get_similarities_from_list(list_of_mentions, mentionlist)
     else:
         print("Bailing out: no mentions found")
 
