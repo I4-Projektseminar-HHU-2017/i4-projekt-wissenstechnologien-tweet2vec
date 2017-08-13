@@ -162,7 +162,7 @@ if __name__ == "__main__":
 
     # build matrix of emojis and tweets containing them
     print("===========")
-    glob=[]
+    emojilist=[]
     for emoji in list_of_emojis: #iterate over emoji
         line = []
         line.append(emoji)
@@ -174,7 +174,7 @@ if __name__ == "__main__":
                 line.append(occurrences)
             else:
                 line.append(0)
-        glob.append(line)
+        emojilist.append(line)
 
 
     print("emojis per tweet")
@@ -186,10 +186,11 @@ if __name__ == "__main__":
 # len(tweet.ref.id_str) == 19
 
     print("")
-    for sublist in glob:
+    for sublist in emojilist:
         for data in sublist:
             print(str(data) + "   ", end="")
         print("") # \n
+
 
 
 
@@ -283,3 +284,5 @@ if __name__ == "__main__":
 # vector space:
  # vector == emojis 
  # dimension == tweet 
+
+ 
