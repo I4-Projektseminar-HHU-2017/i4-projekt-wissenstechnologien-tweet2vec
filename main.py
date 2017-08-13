@@ -117,6 +117,8 @@ def get_similarities_from_list(list_of_sybols, nested_list):
                 vec1 = i
             if i[0] == symbol2:
                 vec2 = i
+            if vec1 and vec2: # we got everything we need, stop searching
+                break
         # once we have the vectors, calc similarity
         sim =  cosine_similarity(vec1, vec2)
         # skip unrelated symbols
