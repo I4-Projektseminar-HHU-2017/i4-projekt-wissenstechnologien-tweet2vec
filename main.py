@@ -98,6 +98,25 @@ def print_similarity(vec1, vec2): #void
     similarity = cosine_similarity(vec1, vec2)
     print("Similarity of '" + vec1[0] + "' and '" + vec2[0] + "' is: " + str(similarity)[0:10])
 
+def get_similarities_from_list(list_):
+    # get combinations
+    combinations = list(itertools.combinations(list_, 2))
+    #print(combinations)
+    for tupel in combinations:
+        symbol1 = tupel[0]
+        symbol2 = tupel[1]
+        vec1 = []
+        vec2 = []
+        # extract vectors of the two symbols from emojilist
+        for i in emojilist:
+            # first element of the vector is the symbol
+            if i[0] == symbol1:
+                vec1 = i
+            if i[0] == symbol2:
+                vec2 = i
+        # once we have the vectors, calc similarity
+        print_similarity(vec1, vec2)
+
 if __name__ == "__main__":
 
     API = tweepy_getAPI()
@@ -210,23 +229,8 @@ if __name__ == "__main__":
                 line.append(0)
         emojilist.append(line)
 
-    # get combinations
-    combinations = list(itertools.combinations(list_of_emojis, 2))
-    #print(combinations)
-    for tupel in combinations:
-        symbol1 = tupel[0]
-        symbol2 = tupel[1]
-        vec1 = []
-        vec2 = []
-        # extract vectors of the two symbols from emojilist
-        for i in emojilist:
-            # first element of the vector is the symbol
-            if i[0] == symbol1:
-                vec1 = i
-            if i[0] == symbol2:
-                vec2 = i
-        # once we have the vectors, calc similarity
-        print_similarity(vec1, vec2)
+    get_similarities_from_list(list_of_emojis)
+
 
 
     print("emojis per tweet")
