@@ -66,7 +66,10 @@ class Tweet:
 
 
 def cosine_similarity(vec1, vec2): #int
-    # @TODO: formular source
+    # the formular for cosine similarity was taken from slides
+    # of the Information Retrieval tutorial by Julia Göretz for the 11th session
+    # on 22.01.2016, page 23
+
     # first item is symbol, prune
     v1 = vec1[1:]
     v2 = vec2[1:]
@@ -86,15 +89,14 @@ def cosine_similarity(vec1, vec2): #int
 
     prod_sums = v1_squared_summed * v2_squared_summed
 
-    denominator = prod_sums**0.5 # root()
+    denominator = prod_sums**0.5 # root 
 
-    #print("numerator: " + str(numerator))
-    #print("denominator: " + str(denominator))
     if (not denominator):
         # this fires if our vectors do not contain common elements
-        #print("error: denominator == 0, could probably not find vectors with common symbols")
+        # print("error: denominator == 0, could probably not find vectors with common symbols")
         return -1
     result = numerator / denominator
+    # formula ends here
     return result
 
 def print_similarity(vec1, vec2): #void
@@ -108,7 +110,6 @@ def print_similarity_from_list(similarity, symbol_1, symbol_2):
 def get_similarities_from_list(list_of_sybols, nested_list):
     # get combinations
     combinations = list(itertools.combinations(list_of_sybols, 2))
-    #print(combinations)
     unsorted_sims = []
     for tupel in combinations:
         symbol1 = tupel[0]
@@ -157,8 +158,7 @@ if __name__ == "__main__":
 
         last_tweets = API.user_timeline(user_id, count = NUM_TWEETS) # count is the number of tweets to retrieve
     except tweepy.error.TweepError as e:
-        # tweepy.error.TweepError: [{'message': 'User not found.', 'code': 50}]
-        # can we handles this more gracefully?s
+
         print("Need valid twitter user name.")
         exit(1)
 
@@ -166,6 +166,7 @@ if __name__ == "__main__":
 
     for i in last_tweets:
         t = Tweet(i) # this creates our own custom wrapper object
+#       # debug:
 #       print("Tweet:")
 #       print(t.message())
 #       print(t.emojis())
@@ -184,14 +185,11 @@ if __name__ == "__main__":
         nested_list_of_hashtags.append(t.hashtags())
         nested_list_of_mentions.append(t.mentions())
 
-
-    # feed emoji sublists into one unified list
-#   print(bad_list_of_emojis) # [[], ['💰', '🐝', '‼', '👀'], ['💰', '💰', '\U0001f91e', '🏼'], ['🤔'], ['💝']]
+    # flatten nested lists
     list_of_emojis = []
     list_of_hashtags = []
     list_of_mentions = []
 
-    # flatten nested lists
     for sublist in nested_list_of_emojis:
         for emoji in sublist:
             list_of_emojis.append(emoji)
@@ -205,15 +203,12 @@ if __name__ == "__main__":
             list_of_mentions.append(mention)
 
 
-#    print(list_of_emojis)
-#    print(list_of_hashtags)
-#    print(list_of_mentions)
-
     # make set
     list_of_emojis = set(list_of_emojis)
     list_of_hashtags = set(list_of_hashtags)
     list_of_mentions = set(list_of_mentions)
 
+"""
     if len(list_of_emojis):
         print("Found emojis:")
         print(list_of_emojis)
@@ -231,20 +226,18 @@ if __name__ == "__main__":
         print(list_of_mentions)
     else:
         print("No @mentions found.")
-
+"""
 
 
 
     # build matrix of emojis and tweets containing them
     print("===========")
     emojilist=[]
-    for emoji in list_of_emojis: #iterate over emoji
+    for emoji in list_of_emojis: # iterate over emoji
         line = []
         line.append(emoji)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if emoji in tweet.text:
-                # @TODO add switch for weighted or unweighted 
-                # line.append(1)
                 occurrences = (tweet.text).count(emoji)
                 line.append(occurrences)
             else:
@@ -259,28 +252,21 @@ if __name__ == "__main__":
         print(tweet.ref.id_str[0:3] + " ", end="")
 
 
-
-# len(tweet.ref.id_str) == 19
-
     print("")
     for sublist in emojilist:
         for data in sublist:
             print(str(data) + "   ", end="")
-        print("") # \n
+        print("")
 
-
-    # same for hashtags
 
     # build matrix of hashtag and tweets containing them
     print("===========")
     hashtaglist=[]
-    for hashtag in list_of_hashtags: #iterate over hashtags
+    for hashtag in list_of_hashtags: # iterate over hashtags
         line = []
         line.append(hashtag)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if hashtag in tweet.text:
-                # @TODO add switch for weighted or unweighted 
-                # line.append(1)
                 occurrences = (tweet.text).count(hashtag)
                 line.append(occurrences)
             else:
@@ -294,16 +280,14 @@ if __name__ == "__main__":
     for tweet in list_of_tweets:
         print(tweet.ref.id_str[0:3] + " ", end="")
 
-# len(tweet.ref.id_str) == 19
 
     print("")
     for sublist in hashtaglist:
         for data in sublist:
             print(str(data) + "   ", end="")
-        print("") # \n
+        print("")
 
 
-    # same for mentions
 
     # build matrix of mention and tweets containing them
     print("===========")
@@ -313,8 +297,6 @@ if __name__ == "__main__":
         line.append(mention)
         for tweet in list_of_tweets: # add information on wether the a tweet contains said emoji
             if mention in tweet.text:
-                # @TODO add switch for weighted or unweighted 
-                # line.append(1)
                 occurrences = (tweet.text).count(mention)
                 line.append(occurrences)
             else:
