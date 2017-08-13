@@ -115,7 +115,10 @@ def get_similarities_from_list(list_):
             if i[0] == symbol2:
                 vec2 = i
         # once we have the vectors, calc similarity
-        print_similarity(vec1, vec2)
+        sim =  cosine_similarity(vec1, vec2)
+        # skip unrelated symbols
+        if sim != 0:
+            print_similarity(vec1, vec2)
 
 if __name__ == "__main__":
 
