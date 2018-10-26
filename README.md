@@ -1,6 +1,8 @@
-# i4-projekt-wissenstechnologien-tweet2vec v 0.5
+### i4-projekt-wissenstechnologien-tweet2vec version 0.5
 
+Author: Matthias "matthiaskrgr" Krüger
 
+Email: `makru117@hhu.de`
 
 Requirements:
 
@@ -31,11 +33,6 @@ First parameter is the twitter account name/id
 Second parameter (optional, defaults to 10) the number of tweets to download
 ````
 
-Contact:
-````
-If you clone this repo, my email will be in the git log.
-Or just open a ticket.
-````
 
 License:
 ````
