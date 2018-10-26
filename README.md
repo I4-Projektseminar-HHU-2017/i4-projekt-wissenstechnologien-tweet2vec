@@ -28,7 +28,7 @@ emoji   https://github.com/carpedm20/emoji/
 
 Usage:
 ````
-./main.py HHU_de 15
+./tweet2vec.py HHU_de 15
 First parameter is the twitter account name/id
 Second parameter (optional, defaults to 10) the number of tweets to download
 ````
