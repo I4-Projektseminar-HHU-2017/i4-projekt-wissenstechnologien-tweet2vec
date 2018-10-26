@@ -4,11 +4,13 @@ Author: Matthias "matthiaskrgr" Krüger
 
 Email: `makru117@hhu.de`
 
+Date: 26.10.2018
 Requirements:
 
 
 The script will need a twitter access token.
 https://dev.twitter.com/oauth/overview/application-owner-access-tokens
+
 The file ````my_config.py```` must look as follows:
 ````
 consumer_key = "xxxxxx"
@@ -26,12 +28,24 @@ tweepy  http://docs.tweepy.org/en/v3.5.0/getting_started.html
 emoji   https://github.com/carpedm20/emoji/
 ````
 
+Installation
+````
+git clone https://github.com/I4-Projektseminar-HHU-2017/i4-projekt-wissenstechnologien-tweet2vec/
+cd i4-projekt-wissenstechnologien-tweet2vec
+touch my_config.py
+# enter the data
+python3 ./tweet2vec.py HHU_de 10
+# if you want to install system wide, you can symlink the script into your $PATH.
+# make sure to have the my_config.py file in your current directory.
+````
+
 Usage:
 ````
 ./tweet2vec.py HHU_de 15
 First parameter is the twitter account name/id
 Second parameter (optional, defaults to 10) the number of tweets to download
 ````
+
 
 
 License:
